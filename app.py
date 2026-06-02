@@ -7,7 +7,7 @@ import pytz
 # Google Maps kliens indítása a felhő biztonságos tárolójából
 gmaps = googlemaps.Client(key=os.environ.get("MY_GOOGLE_KEY", ""))
 
-# Sávbiztos koordináták mindkét irányra
+# A te általad beküldött koordináták tűpontos tizedes változatai mindkét irányra
 hataradatok = {
     "Röszke (Autópálya)": {
         "nonstop": True,
@@ -41,7 +41,7 @@ hataradatok = {
     },
     "Hercegszántó": {
         "nonstop": True,
-        "KILÉPŐ": {"A": (45.94381, 18.94519), "B": (45.92939, 18.9472)},
+        "KILÉPŐ": {"A": (45.94381, 18.94519), "B": (45.92939, 18.93472)},
         "BELÉPŐ": {"A": (45.90961, 18.93522), "B": (45.93753, 18.94242)}
     },
     "Kübekháza": {
@@ -96,7 +96,8 @@ for nev, info in hataradatok.items():
             mode="driving", departure_time="now", traffic_model="best_guess"
         )
         
-        element = matrix['rows']['elements'][0]
+        # JAVÍTÁS: Listák pontos kibontása az [0] indexekkel
+        element = matrix['rows'][0]['elements'][0]
         
         if element['status'] == 'OK':
             duration_normal = element['duration']['value']
